@@ -1,0 +1,80 @@
+import java.util.Scanner;
+
+class MultiplicationTable extends Thread {
+    private int number;
+
+    public MultiplicationTable(int number) {
+        this.number = number;
+    }
+
+    public void run() {
+        for (int i = 1; i <= 10; i++) {
+            System.out.println(number + " x " + i + " = " + (number * i));
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println("Thread interrupted: " + e.getMessage());
+            }
+        }
+    }
+}
+
+class PrimeNumbers extends Thread {
+    private int n;
+
+    public PrimeNumbers(int n) {
+        this.n = n;
+    }
+
+    private boolean isPrime(int num) {
+        if (num < 2) return false;
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) return false;
+        }
+        return true;
+    }
+
+    public void run() {
+        int count = 0, num = 2;
+        while (count < n) {
+            if (isPrime(num)) {
+                System.out.println(num);
+                count++;
+            }
+            num++;
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                System.out.println("Thread interrupted: " + e.getMessage());
+            }
+        }
+    }
+}
+
+public class MultiThreadDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a number for the multiplication table: ");
+        int number = scanner.nextInt();
+
+        System.out.print("Enter the number of prime numbers to generate: ");
+        int primeCount = scanner.nextInt();
+
+        MultiplicationTable tableThread = new MultiplicationTable(number);
+        PrimeNumbers primeThread = new PrimeNumbers(primeCount);
+
+        tableThread.start();
+        primeThread.start();
+
+        try {
+            tableThread.join();
+            primeThread.join();
+        } catch (InterruptedException e) {
+            System.out.println("Main thread interrupted: " + e.getMessage());
+        }
+
+        System.out.println("Threads execution completed.");
+        scanner.close();
+    }
+}
