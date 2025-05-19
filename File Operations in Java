@@ -1,0 +1,69 @@
+// ReadFile . java
+
+import java.io.*;
+
+public class ReadFile {
+    public static void main(String[] args) {
+        String fileName = "example.txt"; // Removed the extra spaces
+        readFile(fileName);
+    }
+
+    public static void readFile(String fileName) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            System.out.println("Reading file content:");
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("File not found or an error occurred: " + e.getMessage());
+        }
+    }
+}
+
+
+
+ // WriteFile . java
+
+import java.io.*;
+
+public class WriteFile {
+    public static void main(String[] args) {
+        String fileName = "example.txt"; // Removed the extra spaces
+        String dataToWrite = "Now successfully completed file handling programme.\n";
+        writeFile(fileName, dataToWrite);
+    }
+
+    public static void writeFile(String fileName, String data) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, false))) {
+            writer.write(data);
+            System.out.println("Data written to file successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file: " + e.getMessage());
+        }
+    }
+}
+
+
+
+
+// AppendFile . java
+
+import java.io.*;
+
+public class AppendFile {
+    public static void main(String[] args) {
+        String fileName = "example.txt"; // Removed the extra spaces
+        String dataToAppend = "Ok, then do the next Java programme.\n"; // Fixed the sentence formatting
+        appendToFile(fileName, dataToAppend);
+    }
+
+    public static void appendToFile(String fileName, String data) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
+            writer.write(data);
+            System.out.println("Data appended to file successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while appending to the file: " + e.getMessage());
+        }
+    }
+}
